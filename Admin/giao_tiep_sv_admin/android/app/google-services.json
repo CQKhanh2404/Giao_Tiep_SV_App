@@ -1,0 +1,49 @@
+{
+  "project_info": {
+    "project_number": "413570651576",
+    "firebase_url": "https://giaotiepsv-a6f9a-default-rtdb.asia-southeast1.firebasedatabase.app",
+    "project_id": "giaotiepsv-a6f9a",
+    "storage_bucket": "giaotiepsv-a6f9a.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:413570651576:android:c44f0b88ba2cfee7f06b4d",
+        "android_client_info": {
+          "package_name": "com.example.giao_tiep_sv_admin"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBcp8K3zDPUXqsnyX9k9lOc7lk-AuUuIVA"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:413570651576:android:c3cf0c2d89ad0606f06b4d",
+        "android_client_info": {
+          "package_name": "com.example.giao_tiep_sv_user"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBcp8K3zDPUXqsnyX9k9lOc7lk-AuUuIVA"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
