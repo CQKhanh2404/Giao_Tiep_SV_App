@@ -1,6 +1,7 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/foundation.dart';
 
+/// Model dữ liệu nhóm (cộng đồng hoặc nhóm do sinh viên tạo)
 class Group {
   final String id;
   final String name;
@@ -24,7 +25,7 @@ class Group {
   });
 
 
-// là các trường khi đưa dữ liệu lên
+  /// Chuyển đối tượng sang Map để lưu lên Firestore
   Map<String, dynamic> tomap() {
     return {
       'id': id,
@@ -38,7 +39,7 @@ class Group {
     };
   }
 
-  // khi doc len 
+  /// Tạo đối tượng Group từ Map đọc được từ Firestore
   factory Group.fromMap(Map<String, dynamic> map) {
     return Group(
       id: map['id'] ?? '',

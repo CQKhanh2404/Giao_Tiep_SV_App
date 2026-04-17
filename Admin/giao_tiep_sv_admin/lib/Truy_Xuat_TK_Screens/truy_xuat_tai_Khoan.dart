@@ -3,6 +3,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'chi_tiet_tai_khoan.dart';
 import 'package:giao_tiep_sv_admin/widget/customSearch.dart';
 
+/// Màn hình tra cứu và xem danh sách tài khoản sinh viên, lọc theo khoa
 class TruyXuatTaiKhoan extends StatefulWidget {
   const TruyXuatTaiKhoan({super.key});
 
@@ -57,7 +58,7 @@ class _TruyXuatTaiKhoanState extends State<TruyXuatTaiKhoan> {
     }
   }
 
-  // Lấy danh sách User theo khoa
+  /// Lấy danh sách tài khoản sinh viên theo khoa đã chọn
   Future<void> _loadUsers(String facultyId) async {
     try {
       final snapshot = await FirebaseFirestore.instance
@@ -91,7 +92,7 @@ class _TruyXuatTaiKhoanState extends State<TruyXuatTaiKhoan> {
     }
   }
 
-  // Lọc theo từ khóa tìm kiếm
+  /// Lọc danh sách hiển thị theo từ khóa tìm kiếm (tên hoặc mã SV)
   void _locTheoTimKiem(String query) {
     final lower = query.toLowerCase();
     setState(() {

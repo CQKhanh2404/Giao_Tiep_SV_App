@@ -1,5 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 
+/// Model dữ liệu báo cáo vi phạm của người dùng
 class ViolationReport {
   final String docId;
   final String title;
@@ -23,6 +24,8 @@ class ViolationReport {
     this.createdAt,
   });
 
+  /// Tạo đối tượng ViolationReport từ DocumentSnapshot đọc từ Firestore.
+  /// Xử lý các trường hợp dữ liệu null và định dạng recipientId khác nhau
   factory ViolationReport.fromFirestore(
     DocumentSnapshot<Map<String, dynamic>> doc,
   ) {

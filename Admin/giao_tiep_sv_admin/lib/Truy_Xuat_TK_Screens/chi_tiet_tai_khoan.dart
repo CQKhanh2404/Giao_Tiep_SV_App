@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 
+/// Màn hình hiển thị thông tin chi tiết của một tài khoản sinh viên
 class ChiTietTaiKhoan extends StatefulWidget {
   final String mssv; // Document ID = mã sinh viên
 
@@ -24,6 +25,7 @@ class _ChiTietTaiKhoanState extends State<ChiTietTaiKhoan> {
     _loadUserData();
   }
 
+  /// Tải thông tin người dùng theo MSSV và tên khoa tương ứng từ Firestore
   Future<void> _loadUserData() async {
     try {
       // 1. LẤY USER THEO mssv (document ID)

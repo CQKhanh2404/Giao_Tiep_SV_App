@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:giao_tiep_sv_admin/Admin/duyet_nhom_admin/model/duyet_nhom_model.dart';
 import 'package:giao_tiep_sv_admin/Admin/duyet_nhom_admin/widget/groups_card.dart';
 
+/// Màn hình quản lý nhóm người dùng: Admin có thể duyệt hoặc từ chối các nhóm, lọc và sắp xếp danh sách
 class DuyetNhomAdminScreen extends StatefulWidget {
   @override
   _DuyetNhomAdminScreenState createState() => _DuyetNhomAdminScreenState();
@@ -24,6 +25,7 @@ class _DuyetNhomAdminScreenState extends State<DuyetNhomAdminScreen> {
     _loadGroups();
   }
 
+  /// Lắng nghe danh sách nhóm từ Firestore theo thời gian thực, sắp xếp theo ngày tạo
   void _loadGroups() {
     _groupSubscription?.cancel();
 
@@ -53,6 +55,7 @@ class _DuyetNhomAdminScreenState extends State<DuyetNhomAdminScreen> {
     );
   }
 
+  /// Đảo ngược thứ tự sắp xếp (mới nhất / cũ nhất) và tải lại dữ liệu
   void _toggleSort() {
     setState(() {
       _sortDescending = !_sortDescending;
@@ -66,6 +69,7 @@ class _DuyetNhomAdminScreenState extends State<DuyetNhomAdminScreen> {
     super.dispose();
   }
 
+  /// Duyệt nhóm: cập nhật id_status=1 lên Firestore
   void _duyetNhom(String groupId, String groupName) {
     FirebaseFirestore.instance
         .collection('Groups')
@@ -77,6 +81,7 @@ class _DuyetNhomAdminScreenState extends State<DuyetNhomAdminScreen> {
         .catchError((e) => _showSnackBar('Lỗi: $e'));
   }
 
+  /// Từ chối nhóm: cập nhật id_status=2 lên Firestore
   void _tuChoiNhom(String groupId, String groupName) {
     FirebaseFirestore.instance
         .collection('Groups')

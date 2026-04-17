@@ -6,6 +6,7 @@ import 'package:giao_tiep_sv_admin/Truy_Xuat_TK_Screens/truy_xuat_tai_Khoan.dart
 import 'package:giao_tiep_sv_admin/lock_person/lock_person.dart';
 import 'bao_cao_vi_pham.dart';
 
+/// Màn hình tổng quan của Admin: hiển thị các chức năng quản trị chính
 class AdminScreen extends StatelessWidget {
   const AdminScreen({super.key});
 
@@ -141,7 +142,7 @@ class AdminScreen extends StatelessWidget {
     );
   }
 
-  // Hàm tiện ích để tạo các nút quản trị viên
+  /// Tạo widget nút điều hướng tái sử dụng cho trang chủ Admin
   Widget _buildAdminButton(
     BuildContext context, {
     required IconData icon,

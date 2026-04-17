@@ -3,6 +3,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:giao_tiep_sv_admin/data/violation_report.dart';
 import 'detail_report.dart';
 
+/// Màn hình danh sách báo cáo vi phạm chưa xử lý, lấy dữ liệu real-time từ Firestore
 class ReportScreen extends StatelessWidget {
   const ReportScreen({super.key});
 
@@ -79,6 +80,7 @@ class ReportScreen extends StatelessWidget {
   }
 }
 
+/// Widget hiển thị một mục báo cáo vi phạm trong danh sách
 class ReportItem extends StatelessWidget {
   final ViolationReport report;
   const ReportItem({super.key, required this.report});
