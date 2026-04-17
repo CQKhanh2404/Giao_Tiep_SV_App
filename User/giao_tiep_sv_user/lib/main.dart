@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:giao_tiep_sv_user/Home_screen/Home/Home_screen/Group_create/nhom_cua_toi.dart';
 import 'package:giao_tiep_sv_user/Home_screen/home.dart';
 import 'package:giao_tiep_sv_user/Login_register/dang_ki.dart';
@@ -9,6 +10,13 @@ import 'firebase_options.dart';
 // Hàm khởi chạy ứng dụng: khởi tạo Firebase rồi chạy app
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
+  // Cho phép xoay ngang và dọc
+  await SystemChrome.setPreferredOrientations([
+    DeviceOrientation.portraitUp,
+    DeviceOrientation.portraitDown,
+    DeviceOrientation.landscapeLeft,
+    DeviceOrientation.landscapeRight,
+  ]);
   await Firebase.initializeApp(options: DefaultFirebaseOptions.currentPlatform);
   runApp(const MyApp());
 }

@@ -539,7 +539,15 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
           SafeArea(
             child: SingleChildScrollView(
               padding: const EdgeInsets.all(20),
-              child: Column(
+              child: Center(
+                child: ConstrainedBox(
+                  constraints: BoxConstraints(
+                    maxWidth: MediaQuery.of(context).orientation ==
+                            Orientation.landscape
+                        ? 500
+                        : double.infinity,
+                  ),
+                  child: Column(
                 children: [
                   // Avatar widget với thiết kế mới
                   GestureDetector(
@@ -626,6 +634,8 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
                     isLoading: _isLoading,
                   ),
                 ],
+              ),
+                ),
               ),
             ),
           ),

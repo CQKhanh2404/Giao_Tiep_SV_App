@@ -126,176 +126,256 @@ class _ProfileScreenState extends State<ProfileScreen> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      backgroundColor: Colors.white,
-      body: SafeArea(
-        child: Padding(
-          padding: const EdgeInsets.all(16.0),
+    final isLandscape =
+        MediaQuery.of(context).orientation == Orientation.landscape;
+
+    // Widget thông tin avatar + tên
+    Widget avatarSection = Row(
+      children: [
+        AvatarWidget(
+          avatarUrl: _avatarUrl,
+          avatarFile: _avatarFile,
+          radius: isLandscape ? 30 : 35,
+        ),
+        const SizedBox(width: 8),
+        Expanded(
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              // Thông tin avatar + tên
               Row(
                 children: [
-                  AvatarWidget(
-                    avatarUrl: _avatarUrl,
-                    avatarFile: _avatarFile,
-                    radius: 35,
-                  ),
-                  const SizedBox(width: 8),
-                  Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Row(
-                        children: [
-                          Text(
-                            _truncateText(_userName, 16),
-                            style: const TextStyle(
-                              fontSize: 21,
-                              color: Colors.blue,
-                              fontWeight: FontWeight.bold,
-                            ),
-                          ),
-                        ],
+                  Flexible(
+                    child: Text(
+                      _truncateText(_userName, 16),
+                      style: const TextStyle(
+                        fontSize: 21,
+                        color: Colors.blue,
+                        fontWeight: FontWeight.bold,
                       ),
-                      Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          Row(
-                            children: [
-                              const Text(
-                                "Ngành học: ",
-                                style: TextStyle(color: Colors.black54),
-                              ),
-                              Text(
-                                _truncateText(_major, 16),
-                                style: const TextStyle(
-                                  fontWeight: FontWeight.w500,
-                                ),
-                              ),
-                            ],
+                      overflow: TextOverflow.ellipsis,
+                    ),
+                  ),
+                ],
+              ),
+              Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Row(
+                    children: [
+                      const Text(
+                        "Ngành học: ",
+                        style: TextStyle(color: Colors.black54),
+                      ),
+                      Flexible(
+                        child: Text(
+                          _truncateText(_major, 16),
+                          style: const TextStyle(
+                            fontWeight: FontWeight.w500,
                           ),
-                          SizedBox(height: 5),
-                          Row(
-                            children: [
-                              const Text(
-                                "Niên khóa: ",
-                                style: TextStyle(color: Colors.black54),
-                              ),
-                              Text(
-                                _schoolYear,
-                                style: const TextStyle(
-                                  fontWeight: FontWeight.w500,
-                                ),
-                              ),
-                            ],
-                          ),
-                        ],
+                          overflow: TextOverflow.ellipsis,
+                        ),
+                      ),
+                    ],
+                  ),
+                  SizedBox(height: 5),
+                  Row(
+                    children: [
+                      const Text(
+                        "Niên khóa: ",
+                        style: TextStyle(color: Colors.black54),
+                      ),
+                      Text(
+                        _schoolYear,
+                        style: const TextStyle(
+                          fontWeight: FontWeight.w500,
+                        ),
                       ),
                     ],
                   ),
                 ],
               ),
-              const SizedBox(height: 25),
+            ],
+          ),
+        ),
+      ],
+    );
 
-              // Thông tin chung
-              const Text(
-                "Thông tin chung",
-                style: TextStyle(fontWeight: FontWeight.bold, fontSize: 20),
+    // Widget danh sách menu
+    Widget menuSection = Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        const Text(
+          "Thông tin chung",
+          style: TextStyle(fontWeight: FontWeight.bold, fontSize: 20),
+        ),
+        const SizedBox(height: 10),
+
+        ListTile(
+          leading: const Icon(Icons.person_outline, color: Colors.blue),
+          title: const Text("Chỉnh sửa thông tin"),
+          trailing: const Icon(Icons.arrow_forward_ios, size: 20),
+          onTap: () async {
+            // Chờ kết quả từ EditProfileScreen
+            final result = await Navigator.push(
+              context,
+              MaterialPageRoute(
+                // lấy đa
+                builder: (context) => EditProfileScreen(
+                  onProfileUpdated: _updateProfile,
+                  currentName: _userName,
+                  currentAvatarUrl: _avatarUrl,
+                  currentAddress: _address,
+                  currentPhone: _phone,
+                  currentAvatarFile: _avatarFile,
+                ),
               ),
-              const SizedBox(height: 10),
+            );
 
-              ListTile(
-                leading: const Icon(Icons.person_outline, color: Colors.blue),
-                title: const Text("Chỉnh sửa thông tin"),
-                trailing: const Icon(Icons.arrow_forward_ios, size: 20),
-                onTap: () async {
-                  // Chờ kết quả từ EditProfileScreen
-                  final result = await Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                      // lấy đa
-                      builder: (context) => EditProfileScreen(
-                        onProfileUpdated: _updateProfile,
-                        currentName: _userName,
-                        currentAvatarUrl: _avatarUrl,
-                        currentAddress: _address,
-                        currentPhone: _phone,
-                        currentAvatarFile: _avatarFile,
-                      ),
-                    ),
-                  );
+            // Nếu có kết quả trả về, cập nhật profile
+            if (result != null && result is Map) {
+              _updateProfile(
+                result['name'] ?? _userName,
+                result['avatarUrl'] ?? _avatarUrl,
+                result['address'] ?? _address,
+                result['phone'] ?? _phone,
+              );
+            }
+          },
+        ),
 
-                  // Nếu có kết quả trả về, cập nhật profile
-                  if (result != null && result is Map) {
-                    _updateProfile(
-                      result['name'] ?? _userName,
-                      result['avatarUrl'] ?? _avatarUrl,
-                      result['address'] ?? _address,
-                      result['phone'] ?? _phone,
-                    );
-                  }
+        ListTile(
+          leading: const Icon(Icons.article_outlined, color: Colors.blue),
+          title: const Text("Bài viết"),
+          trailing: const Icon(Icons.arrow_forward_ios, size: 20),
+          onTap: () {
+            Navigator.push(
+              context,
+              MaterialPageRoute(
+                builder: (context) => PersonalPostScreen(
+                  userName: _userName,
+                  avatarUrl: _avatarUrl,
+                  avatarFile: _avatarFile,
+                  currentUserId: _userId,
+                ),
+              ),
+            );
+          },
+        ),
+        ListTile(
+          leading: const Icon(Icons.bookmark_border, color: Colors.blue),
+          title: const Text("Mục đã lưu"),
+          trailing: const Icon(Icons.arrow_forward_ios, size: 20),
+          onTap: () {
+            Navigator.push(
+              context,
+              MaterialPageRoute(
+                builder: (context) => const SavedItemsProfileScreen(),
+              ),
+            );
+          },
+        ),
+
+        const SizedBox(height: 20),
+        const Text(
+          "Liên kết",
+          style: TextStyle(fontWeight: FontWeight.bold, fontSize: 20),
+        ),
+        const SizedBox(height: 10),
+
+        ListTile(
+          leading: const Icon(Icons.language, color: Colors.blue),
+          title: const Text("Website trường TDC"),
+          onTap: _launchWebsite, // ✅ mở website khi click
+        ),
+        ListTile(
+          leading: const Icon(Icons.logout, color: Colors.blue),
+          title: const Text("Đăng xuất"),
+          onTap: () {
+            Navigator.push(
+              context,
+              MaterialPageRoute(
+                builder: (context) {
+                  return const DangNhap();
                 },
               ),
+            );
+          },
+        ),
+      ],
+    );
 
-              ListTile(
-                leading: const Icon(Icons.article_outlined, color: Colors.blue),
-                title: const Text("Bài viết"),
-                trailing: const Icon(Icons.arrow_forward_ios, size: 20),
-                onTap: () {
-                  Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                      builder: (context) => PersonalPostScreen(
-                        userName: _userName,
+    // ---- CHẾ ĐỘ NGANG: Bố cục 2 cột ----
+    if (isLandscape) {
+      return Scaffold(
+        backgroundColor: Colors.white,
+        body: SafeArea(
+          child: Row(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              // Cột trái: Avatar + thông tin
+              SizedBox(
+                width: MediaQuery.of(context).size.width * 0.35,
+                child: Padding(
+                  padding: const EdgeInsets.all(16.0),
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      AvatarWidget(
                         avatarUrl: _avatarUrl,
                         avatarFile: _avatarFile,
-                        currentUserId: _userId,
+                        radius: 45,
                       ),
-                    ),
-                  );
-                },
+                      const SizedBox(height: 12),
+                      Text(
+                        _truncateText(_userName, 20),
+                        style: const TextStyle(
+                          fontSize: 20,
+                          color: Colors.blue,
+                          fontWeight: FontWeight.bold,
+                        ),
+                        textAlign: TextAlign.center,
+                      ),
+                      const SizedBox(height: 8),
+                      Text(
+                        _major,
+                        style: const TextStyle(fontWeight: FontWeight.w500),
+                        textAlign: TextAlign.center,
+                      ),
+                      const SizedBox(height: 4),
+                      Text(
+                        "Niên khóa: $_schoolYear",
+                        style: const TextStyle(color: Colors.black54),
+                      ),
+                    ],
+                  ),
+                ),
               ),
-              ListTile(
-                leading: const Icon(Icons.bookmark_border, color: Colors.blue),
-                title: const Text("Mục đã lưu"),
-                trailing: const Icon(Icons.arrow_forward_ios, size: 20),
-                onTap: () {
-                  Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                      builder: (context) => const SavedItemsProfileScreen(),
-                    ),
-                  );
-                },
+              const VerticalDivider(width: 1),
+              // Cột phải: Menu items (cuộn được)
+              Expanded(
+                child: SingleChildScrollView(
+                  padding: const EdgeInsets.all(16.0),
+                  child: menuSection,
+                ),
               ),
+            ],
+          ),
+        ),
+      );
+    }
 
-              const SizedBox(height: 20),
-              const Text(
-                "Liên kết",
-                style: TextStyle(fontWeight: FontWeight.bold, fontSize: 20),
-              ),
-              const SizedBox(height: 10),
-
-              ListTile(
-                leading: const Icon(Icons.language, color: Colors.blue),
-                title: const Text("Website trường TDC"),
-                onTap: _launchWebsite, // ✅ mở website khi click
-              ),
-              ListTile(
-                leading: const Icon(Icons.logout, color: Colors.blue),
-                title: const Text("Đăng xuất"),
-                onTap: () {
-                  Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                      builder: (context) {
-                        return const DangNhap();
-                      },
-                    ),
-                  );
-                },
-              ),
+    // ---- CHẾ ĐỘ DỌC: Bố cục 1 cột (cuộn được) ----
+    return Scaffold(
+      backgroundColor: Colors.white,
+      body: SafeArea(
+        child: SingleChildScrollView(
+          padding: const EdgeInsets.all(16.0),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              avatarSection,
+              const SizedBox(height: 25),
+              menuSection,
             ],
           ),
         ),
