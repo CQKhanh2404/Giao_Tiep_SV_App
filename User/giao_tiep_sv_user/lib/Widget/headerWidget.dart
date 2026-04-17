@@ -11,13 +11,7 @@ class Headerwidget extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       height: 70,
-      width: width,
-      // decoration: BoxDecoration(
-      //   border: Border.all(color: Colors.black.withOpacity(0.4),
-      //   width: 3),
-      //   borderRadius: BorderRadius.circular(3.2)
-      // ),
-      // padding: EdgeInsets.symmetric(horizontal: 30,),
+      width: double.infinity,
       child: Center(
         child: createHeader(),
       ),

@@ -103,26 +103,124 @@ class _HomeState extends State<Home> {
     );
   }
 
+  // Widget NavigationRail cho chế độ ngang
+  Widget _buildNavigationRail() {
+    return Container(
+      width: 76,
+      decoration: BoxDecoration(
+        gradient: const LinearGradient(
+          colors: [Color(0xFFFDFBFB), Color(0xFFEBEDEE)],
+          begin: Alignment.topCenter,
+          end: Alignment.bottomCenter,
+        ),
+        boxShadow: [
+          BoxShadow(
+            color: Colors.black.withOpacity(0.1),
+            blurRadius: 10,
+            offset: const Offset(4, 0),
+          ),
+        ],
+      ),
+      child: SafeArea(
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            _buildLandscapeNavItem(Icons.home_filled, "Home", 0),
+            const SizedBox(height: 20),
+            _buildLandscapeNavItem(Icons.chat_bubble_rounded, "Chat", 1),
+            const SizedBox(height: 20),
+            _buildLandscapeNavItem(Icons.person_rounded, "Profile", 2),
+          ],
+        ),
+      ),
+    );
+  }
+
+  // Item điều hướng dọc cho chế độ ngang
+  Widget _buildLandscapeNavItem(IconData icon, String label, int index) {
+    final bool isSelected = _currentIndex == index;
+    return GestureDetector(
+      onTap: () => _onNavigate(index),
+      child: AnimatedContainer(
+        duration: const Duration(milliseconds: 250),
+        curve: Curves.easeInOut,
+        padding: const EdgeInsets.symmetric(vertical: 10, horizontal: 10),
+        decoration: BoxDecoration(
+          borderRadius: BorderRadius.circular(16),
+          gradient: isSelected
+              ? const LinearGradient(
+                  colors: [Color(0xFF6A5AE0), Color(0xFF9B6DFF)],
+                  begin: Alignment.topLeft,
+                  end: Alignment.bottomRight,
+                )
+              : null,
+        ),
+        child: Column(
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            AnimatedScale(
+              scale: isSelected ? 1.2 : 1.0,
+              duration: const Duration(milliseconds: 250),
+              child: Icon(
+                icon,
+                size: 26,
+                color: isSelected ? Colors.white : Colors.grey.shade700,
+              ),
+            ),
+            const SizedBox(height: 4),
+            Text(
+              label,
+              style: TextStyle(
+                fontSize: 11,
+                fontWeight: isSelected ? FontWeight.bold : FontWeight.normal,
+                color: isSelected ? Colors.white : Colors.grey.shade700,
+              ),
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      //load laij trng
-      body: RefreshIndicator(
-        child: PageView(
-          controller: _pageController,
-          onPageChanged: (index) {
-            setState(() {
-              _currentIndex = index;
-            });
-          },
-          children: _pages,
-        ),
-        onRefresh: () async {
-          if (mounted) {
-            setState(() {});
-          }
+    final isLandscape =
+        MediaQuery.of(context).orientation == Orientation.landscape;
+
+    // Widget PageView dùng chung cho cả 2 hướng
+    final pageContent = RefreshIndicator(
+      child: PageView(
+        controller: _pageController,
+        onPageChanged: (index) {
+          setState(() {
+            _currentIndex = index;
+          });
         },
+        children: _pages,
       ),
+      onRefresh: () async {
+        if (mounted) {
+          setState(() {});
+        }
+      },
+    );
+
+    // ---- CHẾ ĐỘ NGANG: NavigationRail bên trái + nội dung bên phải ----
+    if (isLandscape) {
+      return Scaffold(
+        backgroundColor: Colors.grey.shade100,
+        body: Row(
+          children: [
+            _buildNavigationRail(),
+            Expanded(child: pageContent),
+          ],
+        ),
+      );
+    }
+
+    // ---- CHẾ ĐỘ DỌC: Thanh điều hướng dưới cùng (giữ nguyên) ----
+    return Scaffold(
+      body: pageContent,
       backgroundColor: Colors.grey.shade100,
       bottomNavigationBar: Container(
         margin: const EdgeInsets.all(12),

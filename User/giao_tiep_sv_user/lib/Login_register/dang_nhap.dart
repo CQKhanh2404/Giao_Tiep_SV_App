@@ -236,6 +236,10 @@ class _DangNhapState extends State<DangNhap> {
 
   @override
   Widget build(BuildContext context) {
+    final isLandscape =
+        MediaQuery.of(context).orientation == Orientation.landscape;
+    final logoSize = isLandscape ? 70.0 : 150.0;
+
     return Stack(
       children: [
         Scaffold(
@@ -244,36 +248,41 @@ class _DangNhapState extends State<DangNhap> {
             child: SafeArea(
               child: Center(
                 child: SingleChildScrollView(
-                  padding: const EdgeInsets.symmetric(
-                    horizontal: 24,
-                    vertical: 16,
+                  padding: EdgeInsets.symmetric(
+                    horizontal: isLandscape ? 32 : 24,
+                    vertical: isLandscape ? 8 : 16,
                   ),
-                  child: Column(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      Image.asset('assets/images/logo.png', width: 150),
-                      const SizedBox(height: 20),
-                      const Text(
-                        "ĐĂNG NHẬP",
-                        style: TextStyle(
-                          fontStyle: FontStyle.italic,
-                          fontSize: 26,
-                          fontWeight: FontWeight.bold,
-                          color: Colors.blue,
-                          fontFamily: 'Georgia',
+                  child: ConstrainedBox(
+                    constraints: BoxConstraints(
+                      maxWidth: isLandscape ? 450 : double.infinity,
+                    ),
+                    child: Column(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        Image.asset('assets/images/logo.png', width: logoSize),
+                        SizedBox(height: isLandscape ? 10 : 20),
+                        const Text(
+                          "ĐĂNG NHẬP",
+                          style: TextStyle(
+                            fontStyle: FontStyle.italic,
+                            fontSize: 26,
+                            fontWeight: FontWeight.bold,
+                            color: Colors.blue,
+                            fontFamily: 'Georgia',
+                          ),
                         ),
-                      ),
-                      const SizedBox(height: 31),
-                      _buildEmailField(),
-                      const SizedBox(height: 20),
-                      _buildPasswordField(),
-                      const SizedBox(height: 10),
-                      _buildForgotPassword(context),
-                      const SizedBox(height: 10),
-                      _buildLoginButton(context),
-                      const SizedBox(height: 20),
-                      _buildRegisterLink(context),
-                    ],
+                        SizedBox(height: isLandscape ? 16 : 31),
+                        _buildEmailField(),
+                        SizedBox(height: isLandscape ? 12 : 20),
+                        _buildPasswordField(),
+                        const SizedBox(height: 10),
+                        _buildForgotPassword(context),
+                        const SizedBox(height: 10),
+                        _buildLoginButton(context),
+                        SizedBox(height: isLandscape ? 12 : 20),
+                        _buildRegisterLink(context),
+                      ],
+                    ),
                   ),
                 ),
               ),

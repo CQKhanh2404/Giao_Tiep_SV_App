@@ -55,33 +55,45 @@ class _CreateRoomChatState extends State<CreateRoomChat> {
         centerTitle: true,
       ),
 
-      body: Container(
-        padding: EdgeInsets.symmetric(horizontal: 20, vertical: 10),
-        child: Column(
-          children: [
-            _buildGroupImagePicker(),
-            SizedBox(height: 20,),
-            createNameGroup(),
-            SizedBox(height: 20),
-            createButton(),
-            SizedBox(height: 20),
-            createConfirm(
-              ChatRoom(
-                roomId: id,
-                lastMessage: "",
-                lastSender: "",
-                lastTime: DateTime.now(),
-                users: listIDUser,
-                name: nameChat.text,
-                avatarUrl:
-                    "https://wallpapers.com/images/hd/football-players-hd-ronaldo-real-madrid-2x3lm9waylolretc.jpg",
-                typeId: 0,
-                createdBy: widget.myId.toUpperCase(),
-                createdAt: DateTime.now(),
+      body: SingleChildScrollView(
+        child: Center(
+          child: ConstrainedBox(
+            constraints: BoxConstraints(
+              maxWidth: MediaQuery.of(context).orientation ==
+                      Orientation.landscape
+                  ? 500
+                  : double.infinity,
+            ),
+            child: Padding(
+              padding: EdgeInsets.symmetric(horizontal: 20, vertical: 10),
+              child: Column(
+                children: [
+                  _buildGroupImagePicker(),
+                  SizedBox(height: 20,),
+                  createNameGroup(),
+                  SizedBox(height: 20),
+                  createButton(),
+                  SizedBox(height: 20),
+                  createConfirm(
+                    ChatRoom(
+                      roomId: id,
+                      lastMessage: "",
+                      lastSender: "",
+                      lastTime: DateTime.now(),
+                      users: listIDUser,
+                      name: nameChat.text,
+                      avatarUrl:
+                          "https://wallpapers.com/images/hd/football-players-hd-ronaldo-real-madrid-2x3lm9waylolretc.jpg",
+                      typeId: 0,
+                      createdBy: widget.myId.toUpperCase(),
+                      createdAt: DateTime.now(),
+                    ),
+                  ),
+
+                ],
               ),
             ),
-
-          ],
+          ),
         ),
       ),
     );

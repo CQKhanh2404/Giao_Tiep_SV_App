@@ -229,6 +229,10 @@ class _DangKiState extends State<DangKi> {
   }
   @override
   Widget build(BuildContext context) {
+    final isLandscape =
+        MediaQuery.of(context).orientation == Orientation.landscape;
+    final logoSize = isLandscape ? 60.0 : 150.0;
+
     return Scaffold(
       backgroundColor: Colors.white,
       body: Stack(
@@ -236,85 +240,90 @@ class _DangKiState extends State<DangKi> {
           SafeArea(
             child: Center(
               child: SingleChildScrollView(
-                padding: const EdgeInsets.symmetric(
-                  horizontal: 24,
-                  vertical: 16,
+                padding: EdgeInsets.symmetric(
+                  horizontal: isLandscape ? 32 : 24,
+                  vertical: isLandscape ? 8 : 16,
                 ),
-                child: Column(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    if (_hienThiLoi != null) ...[
-                      Container(
-                        padding: const EdgeInsets.symmetric(
-                          horizontal: 12,
-                          vertical: 10,
-                        ),
-                        margin: const EdgeInsets.only(bottom: 10),
-                        decoration: BoxDecoration(
-                          color: Colors.red.shade100,
-                          borderRadius: BorderRadius.circular(8),
-                        ),
-                        child: Row(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          children: [
-                            Icon(
-                              Icons.error_outline,
-                              color: Colors.red.shade700,
-                            ),
-                            const SizedBox(width: 8),
-                            Expanded(
-                              child: Text(
-                                _hienThiLoi!,
-                                style: TextStyle(
-                                  color: Colors.red.shade700,
-                                  fontSize: 14,
-                                ),
-                                textAlign: TextAlign.center,
+                child: ConstrainedBox(
+                  constraints: BoxConstraints(
+                    maxWidth: isLandscape ? 450 : double.infinity,
+                  ),
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      if (_hienThiLoi != null) ...[
+                        Container(
+                          padding: const EdgeInsets.symmetric(
+                            horizontal: 12,
+                            vertical: 10,
+                          ),
+                          margin: const EdgeInsets.only(bottom: 10),
+                          decoration: BoxDecoration(
+                            color: Colors.red.shade100,
+                            borderRadius: BorderRadius.circular(8),
+                          ),
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: [
+                              Icon(
+                                Icons.error_outline,
+                                color: Colors.red.shade700,
                               ),
-                            ),
-                          ],
+                              const SizedBox(width: 8),
+                              Expanded(
+                                child: Text(
+                                  _hienThiLoi!,
+                                  style: TextStyle(
+                                    color: Colors.red.shade700,
+                                    fontSize: 14,
+                                  ),
+                                  textAlign: TextAlign.center,
+                                ),
+                              ),
+                            ],
+                          ),
                         ),
-                      ),
-                    ],
+                      ],
 
-                    Image.asset('assets/images/logo.png', width: 150),
-                    const SizedBox(height: 20),
-                    const Text(
-                      "TẠO TÀI KHOẢN",
-                      style: TextStyle(
-                        fontSize: 26,
-                        fontWeight: FontWeight.bold,
-                        color: Colors.blue,
-                        fontFamily: 'Georgia',
-                      ),
-                    ),
-                    const SizedBox(height: 30),
-                    _buildEmailField(),
-                    if (tenNganh != null) ...[
-                      const SizedBox(height: 8),
-                      Text(
-                        tenNganh!,
+                      Image.asset('assets/images/logo.png', width: logoSize),
+                      SizedBox(height: isLandscape ? 10 : 20),
+                      const Text(
+                        "TẠO TÀI KHOẢN",
                         style: TextStyle(
-                          color:
-                              tenNganh!.contains("Không") ||
-                                  tenNganh!.contains("Lỗi")
-                              ? Colors.red
-                              : Colors.blue,
-                          fontWeight: FontWeight.w600,
+                          fontSize: 26,
+                          fontWeight: FontWeight.bold,
+                          color: Colors.blue,
+                          fontFamily: 'Georgia',
                         ),
                       ),
+                      SizedBox(height: isLandscape ? 16 : 30),
+                      _buildEmailField(),
+                      if (tenNganh != null) ...[
+                        const SizedBox(height: 8),
+                        Text(
+                          tenNganh!,
+                          style: TextStyle(
+                            color:
+                                tenNganh!.contains("Không") ||
+                                    tenNganh!.contains("Lỗi")
+                                ? Colors.red
+                                : Colors.blue,
+                            fontWeight: FontWeight.w600,
+                          ),
+                        ),
+                      ],
+                      SizedBox(height: isLandscape ? 12 : 20),
+                      _buildNameField(),
+                      SizedBox(height: isLandscape ? 12 : 20),
+                      _buildPasswordField(),
+                      SizedBox(height: isLandscape ? 10 : 15),
+                      _buildConfirmPasswordField(),
+                      SizedBox(height: isLandscape ? 16 : 25),
+                      _buildRegisterButton(context),
+                      SizedBox(height: isLandscape ? 12 : 20),
+                      _buildLoginLink(context),
                     ],
-                    const SizedBox(height: 20),
-                    _buildNameField(),
-                    const SizedBox(height: 20),
-                    _buildPasswordField(),
-                    const SizedBox(height: 15),
-                    _buildConfirmPasswordField(),
-                    const SizedBox(height: 25),
-                    _buildRegisterButton(context),
-                    const SizedBox(height: 20),
-                    _buildLoginLink(context),
-                  ],
+                  ),
                 ),
               ),
             ),
