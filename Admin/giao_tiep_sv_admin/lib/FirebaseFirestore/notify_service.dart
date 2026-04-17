@@ -1,8 +1,10 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 
+/// Service hỗ trợ tải thông báo theo loại (type_notify)
 class NotificationService {
   final FirebaseFirestore _firestore = FirebaseFirestore.instance;
 
+  /// Tải danh sách thông báo loại 0 (báo cáo vi phạm từ người dùng)
   Future<List<Map<String, dynamic>>> loadTypeZeroNotifications() async {
     try {
       final notificationsSnapshot = await _firestore

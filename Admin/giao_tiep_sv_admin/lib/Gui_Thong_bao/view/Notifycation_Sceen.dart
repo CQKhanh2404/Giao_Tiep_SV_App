@@ -11,6 +11,7 @@ import 'package:giao_tiep_sv_admin/Tao_nhom_cong_Dong/widget/selected.dart';
 import 'package:giao_tiep_sv_admin/widget/MyButton.dart';
 import 'package:uuid/uuid.dart';
 
+/// Màn hình gửi thông báo: Admin nhập tiêu đề, nội dung và chọn người/khoa nhận
 class ScreenNotify extends StatefulWidget {
   const ScreenNotify({super.key});
 
@@ -80,6 +81,7 @@ class _ScreenNotify extends State<ScreenNotify> {
     );
   }
 
+  /// Xác nhận và gửi thông báo đến người nhận đã chọn (theo từng người hoặc theo khoa)
   Widget complate_create() {
     return InkWell(
       onTap: () async {
@@ -146,6 +148,7 @@ class _ScreenNotify extends State<ScreenNotify> {
     );
   }
 
+  /// Widget các nút chọn người nhận hoặc chọn khoa
   Widget createButton() {
     return Row(
       mainAxisAlignment: MainAxisAlignment.spaceAround,

@@ -18,6 +18,7 @@ import 'package:giao_tiep_sv_admin/widget/MyButton.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:uuid/uuid.dart';
 
+/// Màn hình tạo nhóm cộng đồng: Admin nhập thông tin, chọn ảnh, ủy quyền và chọn khoa áp dụng
 class ScreenCommunityGroup extends StatefulWidget {
   const ScreenCommunityGroup({super.key});
 
@@ -102,7 +103,7 @@ class _ScreenCommunityGroupState extends State<ScreenCommunityGroup> {
     );
   }
 
-  //ham lay cac thanh vien ben trong nhom duoc chon
+  /// Tải toàn bộ danh sách người dùng để phân loại thành viên theo khoa
   Future<void> loadUser() async {
     List<Users> listUserTemp = [];
     listUserTemp = await userService.streamBuilder().first;
@@ -111,7 +112,7 @@ class _ScreenCommunityGroupState extends State<ScreenCommunityGroup> {
     ListAllUser = listUserTemp;
   }
 
-  //them cac thanh vien trong khoa vao nhom
+  /// Thêm ID thành viên thuộc các khoa được chọn vào danh sách khi tạo nhóm
   void addMember() {
     for (var idKhoa in listSelected_khoa) {
       for (var itemUser in ListAllUser) {
@@ -127,7 +128,7 @@ class _ScreenCommunityGroupState extends State<ScreenCommunityGroup> {
     }
   }
 
-  //nut xac nhan tao nhom
+  /// Xác nhận tạo nhóm: tạo Group trên Firestore, thêm thành viên và gửi thông báo
   Widget complate_create() {
     return InkWell(
       onTap: () async {

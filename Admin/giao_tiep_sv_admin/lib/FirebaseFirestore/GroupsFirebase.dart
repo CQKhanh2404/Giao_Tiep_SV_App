@@ -5,11 +5,12 @@ import 'package:giao_tiep_sv_admin/Data/Group.dart';
 import 'package:giao_tiep_sv_admin/Data/GroupMember.dart';
 import 'package:uuid/uuid.dart';
 
+/// Service tương tác với Firestore để quản lý dữ liệu nhóm
 class Groupsfirebase {
   final FirebaseFirestore groupDb = FirebaseFirestore.instance;
   final imagFireStore = FirebaseStorage.instance;
 
-  //lay hinh anh dua len storage
+  /// Tải ảnh đại diện nhóm lên Firebase Storage và trả về URL download
   Future<String?> uploadImageGroupChat(String namefile, File imageFile) async {
     try {
       final putImage = imagFireStore.ref().child("groups/$namefile");
@@ -26,7 +27,7 @@ class Groupsfirebase {
   }
 
   
-  //tao nhom dua len firebase
+  /// Tạo nhóm mới trên Firestore và thêm thành viên đầu tiên vào Groups_members
   Future<void> createGroupAdmin(Group group, Groupmember groupMember) async {
     try {
       await groupDb.collection("Groups").doc(group.id).set(group.tomap());

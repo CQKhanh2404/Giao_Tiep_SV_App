@@ -5,6 +5,7 @@ import 'package:giao_tiep_sv_admin/data/violation_report.dart';
 import 'duyet_nhom_admin/widget/post_card.dart';
 import 'package:intl/intl.dart';
 
+/// Màn hình chi tiết báo cáo vi phạm: hiển thị thông tin người bị báo cáo, bài viết và các hành động xử lý
 class DetailScreen extends StatelessWidget {
   final ViolationReport report;
   final AdminActionService _service = AdminActionService();
@@ -20,7 +21,7 @@ class DetailScreen extends StatelessWidget {
     return 'Không rõ thời gian';
   }
 
-  // ------- Lấy dữ liệu bài viết (Không đổi) -------
+  /// Lấy thông tin chi tiết bài viết bị báo cáo từ Firestore
   Future<Map<String, dynamic>?> _fetchPostDetails() async {
     if (report.postId == null || report.postId!.isEmpty) return null;
     try {
@@ -36,7 +37,7 @@ class DetailScreen extends StatelessWidget {
     return null;
   }
 
-  // 🆕 ------- Lấy dữ liệu người dùng (Recipient) -------
+  /// Lấy thông tin người dùng bị báo cáo từ Firestore theo userId
   Future<Map<String, dynamic>?> _fetchUserDetails(String userId) async {
     if (userId.isEmpty) return null;
     try {
@@ -376,6 +377,7 @@ class DetailScreen extends StatelessWidget {
     );
   }
 
+  /// Hiển thị hộp thoại xác nhận trước khi thực hiện hành động (cảnh báo / khóa tài khoản)
   void _showActionDialog(
     BuildContext context,
     String action,

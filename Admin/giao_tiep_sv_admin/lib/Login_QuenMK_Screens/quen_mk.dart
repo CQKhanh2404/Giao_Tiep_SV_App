@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 
+/// Màn hình quên mật khẩu: cho phép nhập email trường để gửi yêu cầu đặt lại mật khẩu
 class QuenMatKhau extends StatefulWidget {
   const QuenMatKhau({super.key});
 
@@ -20,6 +21,7 @@ class _QuenMatKhauState extends State<QuenMatKhau> {
     super.dispose();
   }
 
+  /// Kiểm tra định dạng email trường (mail.tdc.edu.vn) và gửi yêu cầu đặt lại mật khẩu
   void _validateAndSubmit() {
     final email = _emailController.text.trim();
 

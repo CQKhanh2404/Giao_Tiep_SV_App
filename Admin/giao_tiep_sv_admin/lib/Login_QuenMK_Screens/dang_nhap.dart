@@ -4,6 +4,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:giao_tiep_sv_admin/Admin/Home.dart';
 import 'package:giao_tiep_sv_admin/Login_QuenMK_Screens/quen_mk.dart';
 
+/// Màn hình đăng nhập dành riêng cho Admin, kiểm tra role trước khi vào trang quản trị
 class DangNhapAdmin extends StatefulWidget {
   const DangNhapAdmin({super.key});
 
@@ -29,6 +30,7 @@ class _DangNhapAdminState extends State<DangNhapAdmin> {
     super.dispose();
   }
 
+  /// Xử lý đăng nhập: xác thực email/mật khẩu, kiểm tra role admin, và chuyển màn hình
   Future<void> _dangNhap() async {
     final email = _emailController.text.trim();
     final password = _passwordController.text;
@@ -198,6 +200,7 @@ class _DangNhapAdminState extends State<DangNhapAdmin> {
     );
   }
 
+  /// Widget tái sử dụng để tạo ô nhập liệu có icon và style đồng nhất
   Widget _buildInputField({
     required TextEditingController controller,
     required String hintText,

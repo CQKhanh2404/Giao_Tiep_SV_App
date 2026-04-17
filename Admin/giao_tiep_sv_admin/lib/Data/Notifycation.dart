@@ -1,5 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 
+/// Model dữ liệu thông báo gửi trong hệ thống
 class Notifycation {
   final String id;
   final int type_notify;
@@ -33,6 +34,7 @@ class Notifycation {
   }
 
 
+  /// Chuyển đối tượng sang Map để lưu lên Firestore
   Map<String, dynamic> toMap() {
     return {
       'id': id, 

@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:giao_tiep_sv_admin/widget/customSearch.dart';
 
+/// Màn hình quản lý tài khoản bị khóa: hiển thị danh sách và cho phép mở khóa
 class LockPerson extends StatefulWidget {
   const LockPerson({super.key});
 
@@ -57,7 +58,7 @@ class _LockPersonState extends State<LockPerson> {
     }
   }
 
-  //  HÀM ĐỂ MỞ KHÓA TÀI KHOẢN
+  /// Mở khóa tài khoản: cập nhật is_locked=false và tải lại danh sách
   Future<void> _unlockUser(String userId, String facultyId) async {
     if (userId.isEmpty) return;
     try {
@@ -86,7 +87,7 @@ class _LockPersonState extends State<LockPerson> {
     }
   }
 
-  // Lấy danh sách User theo khoa VÀ is_locked = true
+  /// Lấy danh sách tài khoản bị khóa theo khoa (is_locked = true)
   Future<void> _loadLockedUsers(String facultyId) async {
     try {
       final snapshot = await FirebaseFirestore.instance

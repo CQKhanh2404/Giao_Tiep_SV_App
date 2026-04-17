@@ -2,6 +2,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 
+/// Service xử lý các hành động quản trị: cảnh báo, khóa tài khoản, định dạng thời gian
 class AdminActionService {
   final FirebaseFirestore _firestore = FirebaseFirestore.instance;
 
@@ -27,7 +28,7 @@ class AdminActionService {
     return null;
   }
 
-  /// GỬI CẢNH BÁO VÀ CẬP NHẬT TRẠNG THÁI BÁO CÁO
+  /// Xử lý gửi cảnh báo đến người dùng và đánh dấu báo cáo đã xử lý
   Future<bool> sendWarningAndMarkResolved(
     BuildContext context,
     String recipientId,
@@ -66,7 +67,7 @@ class AdminActionService {
     }
   }
 
-  /// --- HÀM 4: XỬ LÝ KHÓA TÀI KHOẢN ---
+  /// Khóa tài khoản người dùng và đánh dấu báo cáo vi phạm là đã xử lý
   Future<bool> lockUserAccount(String userId, String reportDocId) async {
     if (userId.isEmpty || reportDocId.isEmpty) return false;
 

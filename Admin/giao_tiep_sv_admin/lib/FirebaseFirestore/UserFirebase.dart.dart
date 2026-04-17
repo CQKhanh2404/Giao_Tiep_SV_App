@@ -1,10 +1,11 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:giao_tiep_sv_admin/Data/Users.dart';
 
+/// Service tương tác với Firestore collection "Users"
 class FirestoreServiceUser{
   final FirebaseFirestore dbUser = FirebaseFirestore.instance;
 
-  //real time ds User
+  /// Lắng nghe danh sách tất cả người dùng theo thời gian thực (real-time stream)
   Stream<List<Users>> streamBuilder(){
     return dbUser.collection("Users").snapshots().map((event) {
       return event.docs.map((e) {
