@@ -13,6 +13,7 @@ import '../../../Data/global_state.dart';
 import '../../../FireBase_Service/post_interaction_service.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 
+// Màn hình Trang Chủ: hiển thị bảng tin bài viết theo nhóm đã tham gia
 class TrangChu extends StatefulWidget {
   const TrangChu({super.key});
 
@@ -60,6 +61,7 @@ class TrangChuState extends State<TrangChu> {
 
   // ---------------- FETCH DATA ----------------
 
+  // Lấy danh sách bài viết từ Firestore và lọc theo nhóm hiện tại
   Future<void> _fetchPosts() async {
     final fetchedPosts = await _postService.fetchPosts();
     if (mounted) {
@@ -70,6 +72,7 @@ class TrangChuState extends State<TrangChu> {
     }
   }
 
+  // Lấy vai trò của người dùng hiện tại trong nhóm (0 = thành viên, 1 = trưởng nhóm)
   Future<void> _fetchCurrentUserRole(String groupId) async {
     if (groupId.isEmpty || groupId == "NO_GROUP_SELECTED" || groupId == "ALL") {
       if (mounted) setState(() => _currentUserRole = 1);
@@ -99,6 +102,7 @@ class TrangChuState extends State<TrangChu> {
     }
   }
 
+  // Lấy ID người tạo nhóm hiện tại
   Future<void> _fetchGroupOwnerId(String groupId) async {
     if (groupId.isEmpty || groupId == "NO_GROUP_SELECTED" || groupId == "ALL") {
       if (mounted) setState(() => _groupOwnerId = "");
@@ -140,6 +144,7 @@ class TrangChuState extends State<TrangChu> {
     }
   }
 
+  // Tải danh sách các nhóm đã tham gia và chọn nhóm mặc định
   Future<void> _fetchJoinedGroupNames() async {
     final userId = GlobalState.currentUserId.isNotEmpty
         ? GlobalState.currentUserId
@@ -171,6 +176,7 @@ class TrangChuState extends State<TrangChu> {
     }
   }
 
+  // Lọc bài viết theo nhóm đang được chọn
   void _filterPosts() {
     if (currentGroupId.isEmpty ||
         currentGroupId == "ALL" ||
@@ -195,6 +201,7 @@ class TrangChuState extends State<TrangChu> {
         .toList();
   }
 
+  // Xử lý khi người dùng chuyển sang nhóm khác từ panel trái
   void _changeGroup(String newGroupId, String newGroupName) {
     setState(() {
       currentGroupId = newGroupId;
@@ -206,6 +213,7 @@ class TrangChuState extends State<TrangChu> {
     _fetchGroupOwnerId(newGroupId);
   }
 
+  // Xử lý like/unlike bài viết (cập nhật UI ngay lập tức, đồng bộ Firestore sau)
   void _toggleLike(Map<String, dynamic> post) async {
     final bool currentlyLiked = post["isLiked"] ?? false;
     final String postId = post["id"] as String;
@@ -513,6 +521,7 @@ class TrangChuState extends State<TrangChu> {
     );
   }
 
+  // Mở dialog đăng bài mới, lọc bỏ nhóm "Tất cả" khỏi danh sách chọn
   void _openDangBaiDialog() async {
     // TẠO DANH SÁCH NHÓM ĐÃ LỌC:
     // Loại bỏ mục có ID là 'ALL'
@@ -540,6 +549,7 @@ class TrangChuState extends State<TrangChu> {
     }
   }
 
+  // Mở bottom sheet hiển thị bình luận của bài viết
   void _showCommentSheet(Map<String, dynamic> post) {
     final String postId = post["id"] as String;
 

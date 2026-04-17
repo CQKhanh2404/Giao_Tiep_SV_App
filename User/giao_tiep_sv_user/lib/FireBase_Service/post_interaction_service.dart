@@ -1,5 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 
+// Service xử lý các tương tác với bài viết: like, bình luận, đếm số liệu
 class PostInteractionService {
   final String userId;
   final String userFullname;

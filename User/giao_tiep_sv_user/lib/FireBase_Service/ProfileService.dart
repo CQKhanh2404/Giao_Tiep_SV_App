@@ -5,6 +5,8 @@ import 'package:firebase_storage/firebase_storage.dart';
 import 'package:giao_tiep_sv_user/Data/faculty.dart';
 import 'package:giao_tiep_sv_user/Profile/editProflie/models/profile_model.dart';
 
+// Service quản lý profile người dùng: đọc, cập nhật, upload ảnh đại diện
+// Dùng Singleton để đảm bảo chỉ có 1 instance duy nhất trong toàn app
 class ProfileService {
   static final ProfileService _instance = ProfileService._internal();
   factory ProfileService() => _instance;
@@ -32,11 +34,13 @@ class ProfileService {
 
   ProfileModel? _cachedProfile;
 
+  // Xóa cache và tải lại profile mới nhất từ Firestore
   Future<void> refreshProfile() async {
     _cachedProfile = null;
     await getProfile(forceRefresh: true);
   }
 
+  // Lấy thông tin profile (có cache, chỉ gọi Firestore nếu chưa có hoặc forceRefresh)
   Future<ProfileModel?> getProfile({bool forceRefresh = false}) async {
     final userId = getUserId();
 
@@ -74,6 +78,7 @@ class ProfileService {
     }
   }
 
+  // Lấy profile dướng stream real-time (tự động cập nhật khi dữ liệu thay đổi)
   Stream<ProfileModel?> getProfileStream() {
     final userId = getUserId();
     return _firestore.collection(_collectionName).doc(userId).snapshots().map((
@@ -96,6 +101,7 @@ class ProfileService {
     });
   }
 
+  // Upload ảnh đại diện lên Firebase Storage và trả về URL mới
   Future<String> uploadAvatar(File imageFile) async {
     final userId = getUserId();
     // Lưu ảnh vào thư mục users/
@@ -118,6 +124,7 @@ class ProfileService {
     }
   }
 
+  // Cập nhật thông tin profile (tên, địa chỉ, sđt, ảnh đại diện) lên Firestore
   Future<void> updateProfile(
     ProfileModel profile, {
     String? newAvatarUrl,
@@ -150,6 +157,7 @@ class ProfileService {
     }
   }
 
+  // Lấy tên ngành và niên khóa từ email và mã khoa
   Future<Map<String, String>> layNganhVaNienKhoa(
     String email,
     String facultyId,

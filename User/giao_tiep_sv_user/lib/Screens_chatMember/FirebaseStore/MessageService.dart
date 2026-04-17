@@ -4,6 +4,7 @@ import 'dart:io';
 import 'package:giao_tiep_sv_user/Data/message.dart';
 import 'package:giao_tiep_sv_user/Data/room_chat.dart';
 
+// Service quản lý tin nhắn: gửi tin, tải danh sách phòng chat, quản lý thành viên
 class MessageService {
   final FirebaseFirestore messDB = FirebaseFirestore.instance;
 
@@ -78,6 +79,7 @@ class MessageService {
   }
 
   //lay danh sách tin nhan
+  // Lấy danh sách tất cả phòng chat của người dùng (một lần)
   Future<List<ChatRoom>> listChat(String myID) async {
     try {
       final querySnap = await messDB
@@ -105,6 +107,7 @@ class MessageService {
   }
 
   // Stream realtime để load lai danh sách tin nhắn
+  // Stream real-time danh sách phòng chat (ựng dụng sẽ tự động cập nhật khi có tin mới)
   Stream<List<ChatRoom>> streamChatRooms(String myID) {
     return messDB
         .collection("ChatRooms")
@@ -122,6 +125,7 @@ class MessageService {
   }
 
   //stream real time load các tin nhắn
+  // Stream real-time các tin nhắn bên trong một phòng chat
   Stream<List<Message>> streamMessage(String idRoomChat) {
     return messDB
         .collection("ChatRooms")
@@ -137,6 +141,7 @@ class MessageService {
   }
 
   //gui tin nhan
+  // Gửi tin nhắn văn bản hoặc media vào phòng chat, cập nhật lastMessage của phòng
   Future<Message?> sendMessage({
     required String roomId,
     required String senderID,
@@ -178,6 +183,7 @@ class MessageService {
   }
 
   //tao nhom chats
+  // Tạo phòng chat mới trên Firestore
   Future<void> createChatRooms(ChatRoom chatroom) async {
     try {
       await messDB
@@ -191,6 +197,7 @@ class MessageService {
   }
 
   //lay danh sách các user của nhóm
+  // Lấy danh sách ID của các thành viên trong phòng chat (stream real-time)
   Stream<List<String>> getListIdUser(String idGroup){
     print("hiep: $idGroup");
     return messDB.collection("ChatRooms").doc(idGroup).snapshots().map((event) {
@@ -209,6 +216,7 @@ class MessageService {
 
 
   //them danh sach thanh vien vao nhom chat
+  // Thêm nhiều thành viên vào phòng chat nhóm
   Future<void> addMembersToChatRoom(String roomId, List<String> userIds) async {
   try {
     await messDB.collection("ChatRooms").doc(roomId).update({
@@ -222,6 +230,7 @@ class MessageService {
 }
 
   //thanh vien roi nhom 
+  // Xóa thành viên khỏi phòng chat (rời nhóm)
    Future<void> removeMembersToChatRoom(String roomId, String idUs) async {
   try {
 

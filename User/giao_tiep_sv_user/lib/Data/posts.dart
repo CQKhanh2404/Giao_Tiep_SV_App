@@ -1,5 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 
+// Model dữ liệu bài đăng trong nhóm
 class Posts {
   final String id_post;
   final String user_id;

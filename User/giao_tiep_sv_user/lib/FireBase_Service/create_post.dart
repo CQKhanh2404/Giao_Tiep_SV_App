@@ -1,8 +1,10 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 
+// Service tạo bài đăng mới vào Firestore (trạng thái chờ duyệt)
 class CreatePostService {
   final FirebaseFirestore _firestore = FirebaseFirestore.instance;
 
+  // Đăng bài mới với nội dung, ảnh và nhóm được chọn; bài mới luôn ở trạng thái chờ duyệt (status_id = 0)
   Future<bool> uploadPost({
     required String currentUserId,
     required String content,

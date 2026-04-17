@@ -6,12 +6,14 @@ import 'package:giao_tiep_sv_user/Login_register/dang_nhap.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'firebase_options.dart';
 
+// Hàm khởi chạy ứng dụng: khởi tạo Firebase rồi chạy app
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp(options: DefaultFirebaseOptions.currentPlatform);
   runApp(const MyApp());
 }
 
+// Widget gốc của ứng dụng, cấu hình theme và trang khởi đầu là màn hình Đăng Nhập
 class MyApp extends StatelessWidget {
   const MyApp({super.key});
 
