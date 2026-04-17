@@ -39,6 +39,7 @@
 // }
 import 'package:cloud_firestore/cloud_firestore.dart';
 
+// Model dữ liệu phòng chat (hỗ trợ cả chat 1-1 và nhóm)
 class ChatRoom {
   final String roomId;        
   final String lastMessage;   
@@ -64,6 +65,7 @@ class ChatRoom {
     required this.createdAt,
   });
 
+  // Tạo đối tượng ChatRoom từ document Firestore
   factory ChatRoom.fromFirestore(DocumentSnapshot doc) {
     final data = doc.data() as Map<String, dynamic>;
 
@@ -82,6 +84,8 @@ class ChatRoom {
     );
   }
 
+  // Chuyển đối tượng ChatRoom sang Map để lưu lên Firestore
+  // typeId tự động: 0 = chat 1-1, 1 = nhóm (dựa trên số lượng users)
   Map<String, dynamic> toMap() {
     return {
       'lastMessage': lastMessage,

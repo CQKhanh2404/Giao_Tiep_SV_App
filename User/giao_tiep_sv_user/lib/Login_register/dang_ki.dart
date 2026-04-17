@@ -32,6 +32,7 @@ class _DangKiState extends State<DangKi> {
   String? tenNganh;
   String? maNganh;
 
+  // Kiểm tra email theo định dạng TDC và tự động tra cứu tên ngành từ mã ngành
   void _kiemTraEmail() async {
     String email = emailController.text.trim();
     final RegExp pattern = RegExp(
@@ -166,6 +167,7 @@ class _DangKiState extends State<DangKi> {
     }
   }
   //dua member vao group cua khoa 
+  // Tự động thêm người dùng vào các nhóm mặc định của khoa sau khi đăng ký
   Future<void> loadGroup(String id,String idUser)async{
     List<String> listTemp = [];
     listTemp = await groupService.loadGroupsforId(id.toUpperCase());

@@ -295,6 +295,7 @@ class _DangNhapState extends State<DangNhap> {
     );
   }
 
+  // Xây dựng ô nhập email sinh viên
   Widget _buildEmailField() {
     return Container(
       decoration: BoxDecoration(
@@ -316,6 +317,7 @@ class _DangNhapState extends State<DangNhap> {
     );
   }
 
+  // Xây dựng ô nhập mật khẩu (có nút ẩn/hiện)
   Widget _buildPasswordField() {
     return Container(
       decoration: BoxDecoration(
@@ -348,6 +350,7 @@ class _DangNhapState extends State<DangNhap> {
     );
   }
 
+  // Xây dựng nút "Quên mật khẩu?" điều hướng đến màn hình đặt lại mật khẩu
   Widget _buildForgotPassword(BuildContext context) {
     return Row(
       mainAxisAlignment: MainAxisAlignment.end,
@@ -366,6 +369,7 @@ class _DangNhapState extends State<DangNhap> {
     );
   }
 
+  // Xây dựng nút đăng nhập chính
   Widget _buildLoginButton(BuildContext context) {
     return SizedBox(
       width: double.infinity,
@@ -387,6 +391,7 @@ class _DangNhapState extends State<DangNhap> {
     );
   }
 
+  // Xây dựng liên kết chuyển sang màn hình đăng ký
   Widget _buildRegisterLink(BuildContext context) {
     return Row(
       mainAxisAlignment: MainAxisAlignment.center,

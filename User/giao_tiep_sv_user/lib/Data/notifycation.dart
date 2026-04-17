@@ -1,5 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 
+// Model dữ liệu thông báo gửi đến người dùng
 class Notifycation {
   final String id;
   final String title;
@@ -31,6 +32,7 @@ class Notifycation {
     );
   }
 
+  // Chuyển đổi dữ liệu người nhận (Map) từ Firestore sang kiểu Map<String, String>
   static Map<String, String> _parseRecipientMap(dynamic input) {
     if (input is Map) {
       return input.map(
@@ -40,6 +42,7 @@ class Notifycation {
     return {};
   }
 
+  // Chuyển đổi đối tượng thông báo sang Map để lưu lên Firestore
   Map<String, dynamic> toMap() {
     return {
       'title': title,

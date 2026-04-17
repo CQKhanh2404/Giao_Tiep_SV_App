@@ -1,9 +1,11 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:giao_tiep_sv_user/Data/Users.dart';
 
+// Service truy xuất thông tin người dùng từ Firestore
 class Userservices {
   final FirebaseFirestore userDB = FirebaseFirestore.instance;
 
+  // Lấy thông tin người dùng theo ID
   Future<Users?> getUserForID(String myID) async {
     try {
       final snap = await userDB
@@ -25,6 +27,7 @@ class Userservices {
 
   //load danh sach nguoi dung
   //real time ds User
+  // Stream real-time danh sách tất cả sinh viên (role = 0)
   Stream<List<Users>> streamBuilder() {
     return userDB.collection("Users").where("role", isEqualTo: 0).snapshots().map((
       event,

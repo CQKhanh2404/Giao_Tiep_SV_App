@@ -1,5 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 
+// Model dữ liệu nhóm (Group) trong hệ thống
 class Groups {
   final String id_group;
   final String name;
@@ -23,6 +24,7 @@ class Groups {
     required this.type_id,
   });
 
+  // Tạo đối tượng Groups từ một document Firestore
   factory Groups.fromFirestore(DocumentSnapshot doc) {
     final data = doc.data() as Map<String, dynamic>? ?? {};
     return Groups(

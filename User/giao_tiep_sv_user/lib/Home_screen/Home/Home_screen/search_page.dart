@@ -14,6 +14,8 @@ import 'package:uuid/uuid.dart';
 import '../Home_screen/wiget/comment_sheet_content.dart';
 import '../../../FireBase_Service/post_interaction_service.dart';
 
+// Màn hình Tìm kiếm: cho phép tìm kiếm người dùng hoặc bài viết,
+// có thể nhắn tin 1-1 trực tiếp từ kết quả tìm kiếm
 class SearchPage extends StatefulWidget {
   final String myID;
   const SearchPage({super.key, required this.myID});
@@ -65,11 +67,13 @@ class _SearchPageState extends State<SearchPage> {
     super.dispose();
   }
 
+  // Lấy thông tin của thành viên muốn nhắn tin
   Future<void> GetmememberChat(String id) async{
     memberChat = await userservices.getUserForID(id.toUpperCase());
     print("name: ${memberChat!.fullname}");
   }
 
+  // Tải danh sách các nhóm đã tham gia để lọc kết quả tìm kiếm bài viết
   Future<void> _fetchGroups() async {
     if (_currentUserId.isEmpty) {
       setState(() {
@@ -103,6 +107,7 @@ class _SearchPageState extends State<SearchPage> {
     }
   }
 
+  // Lắng nghe thay đổi ô tìm kiếm và thực hiện tìm kiếm tự động
   void _onSearchChanged() {
     if (!_isGroupsLoading && _searchController.text.length > 1) {
       _performSearch(_searchController.text.trim());
@@ -111,6 +116,7 @@ class _SearchPageState extends State<SearchPage> {
     }
   }
 
+  // Bổ sung thông tin like/comment vào từng bài viết tìm được
   Future<List<Map<String, dynamic>>> _enrichPostsWithInteractions(
     List<Map<String, dynamic>> posts,
   ) async {
@@ -140,6 +146,7 @@ class _SearchPageState extends State<SearchPage> {
     return await Future.wait(futures);
   }
 
+  // Thực hiện tìm kiếm người dùng hoặc bài viết theo từ khóa
   Future<void> _performSearch(String query) async {
     if (_isLoading || _isGroupsLoading) return;
 

@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart'; // 👈 thêm dòng này
 
+// Màn hình Quên Mật Khẩu: gửi email đặt lại mật khẩu qua Firebase Auth
 class QuenMatKhau extends StatefulWidget {
   const QuenMatKhau({super.key});
 
@@ -20,6 +21,7 @@ class _QuenMatKhauState extends State<QuenMatKhau> {
     super.dispose();
   }
 
+  // Xác thực email và gửi link đặt lại mật khẩu qua Firebase Auth
   Future<void> _validateAndSubmit() async {
     final email = _emailController.text.trim();
 

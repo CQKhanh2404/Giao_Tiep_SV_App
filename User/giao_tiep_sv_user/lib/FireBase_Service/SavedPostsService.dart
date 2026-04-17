@@ -1,9 +1,12 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:collection/collection.dart';
 
+// Service quản lý bài viết đã lưu: lưu, bỏ lưu, tải danh sách bài đã lưu
 class SavedPostsService {
   final FirebaseFirestore _firestore = FirebaseFirestore.instance;
 
+  // Stream real-time danh sách bài đã lưu của người dùng,
+  // kèm thông tin bài, tên người đăng và tên nhóm
   Stream<List<Map<String, dynamic>>> streamSavedPosts(
     String studentId, {
     bool sortDescending = true,

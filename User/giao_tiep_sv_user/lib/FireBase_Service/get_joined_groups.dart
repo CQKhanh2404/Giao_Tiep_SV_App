@@ -1,6 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 
+// Service lấy danh sách các nhóm mà người dùng đã tham gia
 class GetJoinedGroupsService {
   final FirebaseFirestore _firestore = FirebaseFirestore.instance;
 
@@ -19,6 +20,7 @@ class GetJoinedGroupsService {
     return Icons.people;
   }
 
+  // Lấy chi tiết thông tin nhóm (tên, ảnh) theo ID, bỏ qua nhóm chưa được duyệt
   Future<Map<String, dynamic>?> _fetchGroupDetails(String groupId) async {
     try {
       final groupDoc = await _firestore.collection('Groups').doc(groupId).get();
@@ -43,6 +45,7 @@ class GetJoinedGroupsService {
     return null;
   }
 
+  // Lấy tất cả nhóm đã tham gia của người dùng, kèm mục "Tất cả" ở đầu
   Future<List<Map<String, dynamic>>> fetchJoinedGroups(String userId) async {
     List<Map<String, dynamic>> resultGroups = [
       {"name": "Tất cả", "icon": Icons.public, "id": "ALL"},

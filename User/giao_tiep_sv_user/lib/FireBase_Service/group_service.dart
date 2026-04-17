@@ -1,6 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import '../Data/global_state.dart';
 
+// Service quản lý tính năng tham gia nhóm của người dùng
 class GroupService {
   final FirebaseFirestore _firestore = FirebaseFirestore.instance;
 
@@ -86,6 +87,7 @@ class GroupService {
   }
 
   // thanh vien roi nhom 
+  // Xóa thành viên khỏi nhóm (rời nhóm)
   Future<void> deleteMemberByUserId(String userId,String roomId) async {
   try {
     final snap = await FirebaseFirestore.instance

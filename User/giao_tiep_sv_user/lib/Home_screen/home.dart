@@ -3,6 +3,8 @@ import 'package:giao_tiep_sv_user/Home_screen/Home/Home_screen/TrangChu.dart';
 import 'package:giao_tiep_sv_user/Profile/profile.dart';
 import 'package:giao_tiep_sv_user/Screens_chatMember/view/chatMemberScreens.dart';
 
+// Màn hình chính của app, chứa 3 tab: Trang Chủ, Chat, Profile
+// Sử dụng PageController để chuyển tab mượt mà
 class Home extends StatefulWidget {
   const Home({Key? key}) : super(key: key);
 
@@ -31,7 +33,7 @@ class _HomeState extends State<Home> {
     _pages = [
       TrangChu(key: _trangChuKey),
       const ChatMemberScreen(),
-      // const ProfileScreen(),
+      const ProfileScreen(),
     ];
   }
 
@@ -41,6 +43,7 @@ class _HomeState extends State<Home> {
     super.dispose();
   }
 
+  // Chuyển sang tab được chọn với animation mượt mà
   void _onNavigate(int index) {
     _pageController.animateToPage(
       index,
@@ -51,6 +54,7 @@ class _HomeState extends State<Home> {
 
   // ĐÃ XÓA: Hàm _openSavedItems()
 
+  // Xây dựng item điều hướng có animation khi được chọn
   Widget _buildAnimatedNavItem(IconData icon, String label, int index) {
     final bool isSelected = _currentIndex == index;
 

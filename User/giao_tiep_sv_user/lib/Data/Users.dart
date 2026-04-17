@@ -1,3 +1,4 @@
+// Model dữ liệu người dùng (sinh viên) trong hệ thống
 class Users {
   final String id_user;
   final String email;
@@ -11,6 +12,7 @@ class Users {
 
   Users({required this.id_user, required this.email,  required this.fullname,  this.phone,  this.address, required this.url_avt, required this.role, required this.faculty_id});
 
+  // Tạo đối tượng Users từ dữ liệu Firestore (dạng Map)
   factory Users.fromMap(Map<String,dynamic> map){
     final idUs = map['email'].toString().split("@")[0]??" ";
     return Users(

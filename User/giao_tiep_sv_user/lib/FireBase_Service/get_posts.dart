@@ -2,6 +2,7 @@
 
 import 'package:cloud_firestore/cloud_firestore.dart';
 
+// Service lấy danh sách bài viết đã được duyệt kèm thông tin người đăng và số liệu tương tác
 class GetPosts {
   final FirebaseFirestore _firestore = FirebaseFirestore.instance;
 
